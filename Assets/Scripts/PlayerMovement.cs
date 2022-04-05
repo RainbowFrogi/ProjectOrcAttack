@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] CharacterController controller;
 
+    float speedAtStart;
     [SerializeField] float speed = 12f;
     [SerializeField] float gravity = -9.81f;
     [SerializeField] float jumpHeight = 3f;
@@ -25,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        speedAtStart = speed;
     }
 
     // Update is called once per frame
@@ -53,6 +54,11 @@ public class PlayerMovement : MonoBehaviour
     void MovePlayer()
     {
         Vector3 move = transform.right * x + transform.forward * z;
+        if (z != 0 && x != 0)
+        {
+            speed = speedAtStart / 1.3f;
+        }
+        else speed = speedAtStart;
 
         controller.Move(move * speed * Time.deltaTime);
 
