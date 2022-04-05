@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float speed = 12f;
     [SerializeField] float gravity = -9.81f;
     [SerializeField] float jumpHeight = 3f;
+    [SerializeField] float runMultiplier = 1.4f;
     float x;
     float z;
 
@@ -54,9 +55,17 @@ public class PlayerMovement : MonoBehaviour
     void MovePlayer()
     {
         Vector3 move = transform.right * x + transform.forward * z;
+
+        //if player moves with both axis at the same time, we'll slow them down, so they don't speed up more than they should
         if (z != 0 && x != 0)
         {
             speed = speedAtStart / 1.3f;
+        }
+        else speed = speedAtStart;
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = speedAtStart * runMultiplier;
         }
         else speed = speedAtStart;
 
