@@ -14,9 +14,9 @@ public class PlayerMovement : MonoBehaviour
     float x;
     float z;
 
-    [Header ("Ground Check")]
+    [Header("Ground Check")]
     [SerializeField] Transform groundCheck;
-    [SerializeField] float  groundDistance = 0.4f;
+    [SerializeField] float groundDistance = 0.4f;
     [SerializeField] LayerMask groundMask;
 
 
@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        if(isGrounded && velocity.y < 0)
+        if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
