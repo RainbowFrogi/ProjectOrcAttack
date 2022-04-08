@@ -32,4 +32,6 @@ public class MenuManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         GameManager.Instance.gameState = gamestate.gameIsRunning;
     }
+
+    
 }
