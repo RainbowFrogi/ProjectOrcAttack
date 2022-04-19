@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 
     public MenuManager menuManager;
 
+    public TowerManager towerManager;
+
     public gamestate gameState;
 
     private void Awake()
