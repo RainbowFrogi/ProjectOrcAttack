@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CurrencySystem : MonoBehaviour
 {
-
-    
-
+    public TextMeshProUGUI moneyText;
     [Header("Values")]
-    [HideInInspector] public int moneyAtStart = 50;
+    public int moneyAtStart = 250;
     public int moneyAmount;
 
     void Awake()
@@ -24,6 +23,13 @@ public class CurrencySystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateMoneyText();
     }
+
+    void UpdateMoneyText()
+    {
+        moneyText.text = $"Money: {moneyAmount}$";
+    }
+
+    
 }

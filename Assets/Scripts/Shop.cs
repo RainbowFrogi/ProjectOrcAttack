@@ -9,6 +9,8 @@ public class Shop : MonoBehaviour
     [SerializeField] GameObject pressToShopText;
     [SerializeField] GameObject ShopGUI;
 
+    public TextMeshProUGUI errorMessage;
+
     MenuManager menuManager;
 
     // Start is called before the first frame update
@@ -49,5 +51,14 @@ public class Shop : MonoBehaviour
             menuManager.CloseAllMenus();
 
         }
+    }
+
+    public IEnumerator showErrorText()
+    {
+        errorMessage.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+
+        errorMessage.gameObject.SetActive(false);
     }
 }

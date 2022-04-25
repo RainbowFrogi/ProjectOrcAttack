@@ -17,6 +17,10 @@ public class GameManager : MonoBehaviour
 
     public TowerManager towerManager;
 
+    public CurrencySystem currencySystem;
+
+    public Shop shop;
+
     public gamestate gameState;
 
     private void Awake()
