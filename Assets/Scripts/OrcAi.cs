@@ -2,18 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using HietakissaUtils;
 
 public class OrcAi : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Transform movePositionTransform;
+
+    private NavMeshAgent orc;
+
+    private void Awake()
     {
-        
+        orc = GetComponent<NavMeshAgent>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Vector3.Distance(orc.transform.position, orc.destination) > 10)
+        {
+            Move();
+        }
+        else
+        {
+            StartCoroutine(Attack());
+        }
+    }
+
+    private void Move()
+    {
+        orc.destination = movePositionTransform.position;
+    }
+
+    IEnumerator Attack()
+    {
+        yield return new WaitForSeconds(4f);
     }
 }
