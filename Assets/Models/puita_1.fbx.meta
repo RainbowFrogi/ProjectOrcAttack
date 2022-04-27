@@ -1,26 +1,8 @@
 fileFormatVersion: 2
-guid: 9f52bf0692a21e64794361ba261f7e7a
+guid: 5e371c7a624d46b4682561ff54924fae
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable:
-  - first:
-      74: 8499333874965865341
-    second: R Leg|L LegAction
-  - first:
-      74: -1837440491510148998
-    second: R Leg|R LegAction
-  - first:
-      74: -2514236393551729132
-    second: R Leg|R LegAction.001
-  - first:
-      74: 1631019028419890454
-    second: L Leg|L LegAction
-  - first:
-      74: 7719883338183372276
-    second: L Leg|R LegAction
-  - first:
-      74: -5118487048999285984
-    second: L Leg|R LegAction.001
+  internalIDToNameTable: []
   externalObjects: {}
   materials:
     materialImportMode: 2

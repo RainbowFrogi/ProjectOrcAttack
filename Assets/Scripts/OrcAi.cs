@@ -3,37 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using HietakissaUtils;
+using HietakissaUtils.Health;
+using HietakissaUtils.Timer;
 
 public class OrcAi : MonoBehaviour
 {
     [SerializeField] private Transform movePositionTransform;
 
+    public HealthSystem healthSystem;
+
+    public Timer timer;
+
+    public Animator walkAnim;
+    
+
+
     private NavMeshAgent orc;
+    float distanceToCastle;
 
     private void Awake()
     {
         orc = GetComponent<NavMeshAgent>();
+
+        Timer timer = new Timer(3f, gameObject);
+
+        timer.OnCompleted += Actions;
     }
 
-    private void Update()
-    {
-        if (Vector3.Distance(orc.transform.position, orc.destination) > 10)
-        {
-            Move();
-        }
-        else
-        {
-            StartCoroutine(Attack());
-        }
-    }
-
-    private void Move()
+    private void Start()
     {
         orc.destination = movePositionTransform.position;
+        Move();
     }
 
-    IEnumerator Attack()
+    void Actions()
     {
-        yield return new WaitForSeconds(4f);
+        distanceToCastle = Vector3.Distance(transform.position, movePositionTransform.position);
+        if (distanceToCastle < 23)
+        {
+            CastleManager.healthSystem.Damage(100f);
+            orc.isStopped = true;
+
+            walkAnim.SetBool("IsAttacking", true);
+        }
+        else Move();
+    }
+    private void Move()
+    {
+        print("tried to move");
+        orc.isStopped = false;
+        
     }
 }

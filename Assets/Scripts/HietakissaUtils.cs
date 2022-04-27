@@ -114,6 +114,8 @@ namespace HietakissaUtils
     /// <summary>
     /// CURRENTLY INT.ABS, FLOAT.ABS, MAF.POINTINRANGE, MAF.FLIPONE, FLOAT.ROUND, FLOAT.ROUNDTONEAREST, MAF.ROUNDTODECIMALPLACES, FLOAT.ROUNDTODECIMALPLACES, FILEUTILITIES, OPTIMIZATION, TIMER, POOL, QUATERNION.FLIP
     /// ARE NOT DOCUMENTED
+    /// 
+    /// UPDATE HEALTHSYSTEM, NEW CONSTRUCTOR AND WAY TO STOP HEALING IF SETTING REGENDELAY TO -1
     /// </summary>
 
     public abstract class Maf
@@ -553,7 +555,7 @@ namespace HietakissaUtils
             }
         }
 
-        abstract class TickTimer : MonoBehaviour
+        class TickTimer : MonoBehaviour
         {
             Timer timer;
 
@@ -614,14 +616,14 @@ namespace HietakissaUtils
             public Action OnDied;
             public Action OnRespawned;
 
-            bool isAlive;
+            public bool isAlive { get; private set; }
 
             //Regen component variable
             HealthRegen regen;
 
             //Health variables
-            float maxHealth;
-            float currentHealth;
+            public float maxHealth { get; private set; }
+            public float currentHealth { get; private set; }
 
             //All regen variables are optional, by default regen will be disabled and regen will happen every second for 5hp
             public HealthSystem(float maxHealth = 100f)
@@ -629,13 +631,17 @@ namespace HietakissaUtils
                 //Apply health
                 this.maxHealth = maxHealth;
                 currentHealth = maxHealth;
+
+                isAlive = true;
             }
 
-            public HealthSystem(float maxHealth = 100f, GameObject regenTarget = null, float regenDelay = 1f, float regenAmount = 5f, bool healDecimal = false)
+            public HealthSystem(float maxHealth = 100f, GameObject regenTarget = null, float regenDelay = 1f, float regenAmount = 5f, bool interruptHealing = false, bool healDecimal = false)
             {
                 //Apply health
                 this.maxHealth = maxHealth;
                 currentHealth = maxHealth;
+
+                isAlive = true;
 
                 if (regenTarget != null) //Is there a target for regen
                 {
@@ -651,7 +657,7 @@ namespace HietakissaUtils
             //Actions
             public void Damage(float damageAmount)
             {
-                if (currentHealth <= 0f) return; //We are already dead -> don't fire events
+                if (!isAlive) return; //We are already dead -> don't fire events
                 damageAmount = Maf.Abs(damageAmount);
 
                 currentHealth -= damageAmount;
@@ -682,10 +688,10 @@ namespace HietakissaUtils
 
             public void HealToFull()
             {
-                currentHealth = maxHealth; //Set current health to maximum
+                Heal(maxHealth); //Set current health to maximum
             }
 
-            public void Respawn(float healthMultiplier) //0 to respawn with 0 health (will break) 1 to respawn with full health
+            public void Respawn(float healthMultiplier) //0 to respawn with 0 health 1 to respawn with full health
             {
                 currentHealth = maxHealth * healthMultiplier;
 
@@ -701,9 +707,12 @@ namespace HietakissaUtils
 
             public float GetHealthDecimal()
             {
-                ClampHealth();
-
                 return currentHealth / maxHealth; //Return health as a decimal ranging from 0 (dead) to 1 (full hp)
+            }
+
+            public float GetMaxHealth()
+            {
+                return maxHealth;
             }
 
             public bool IsAlive()
@@ -776,6 +785,10 @@ namespace HietakissaUtils
             float regenAmount;
             bool healDecimal;
 
+            bool interrupt;
+
+            bool running;
+
             //Timer
             float timer;
 
@@ -786,6 +799,8 @@ namespace HietakissaUtils
 
             void HealTimer()
             {
+                if (!running) return;
+
                 timer += Time.deltaTime; //Increment timer
 
                 if (timer >= regenDelay) //Is timer greater than or equal to regenDelay, if so heal by regenAmount
@@ -804,6 +819,9 @@ namespace HietakissaUtils
 
             public void SetRegenDelay(float delay)
             {
+                if (delay == -1) running = false;
+                else running = true;
+
                 regenDelay = delay; //Set regen delay
             }
 
@@ -814,12 +832,18 @@ namespace HietakissaUtils
             }
 
             //Setup regen
-            public void Setup(HealthSystem healthSystem, bool healDecimal = false)
+            public void Setup(HealthSystem healthSystem, bool interrupt, bool healDecimal = false)
             {
                 this.healthSystem = healthSystem;
                 this.healDecimal = healDecimal;
+                this.interrupt = interrupt;
 
-                healthSystem.OnTookDamage += TookDamage;
+                if (interrupt) healthSystem.OnTookDamage += TookDamage;
+            }
+
+            void OnDisable()
+            {
+                if (interrupt) healthSystem.OnTookDamage -= TookDamage;
             }
         }
     }
