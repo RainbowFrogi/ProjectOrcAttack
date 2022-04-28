@@ -30,9 +30,9 @@ public class OrcAi : MonoBehaviour
 
     private void Start()
     {
-        //FIX THIS
-        movePositionTransform = transform.Find("OrcAttackCastle");
-        //FIX THIS
+        
+        movePositionTransform = GameObject.Find("OrcAttackCastle").transform;
+        
 
         orc.destination = movePositionTransform.position;
         Move();

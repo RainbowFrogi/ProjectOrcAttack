@@ -5,29 +5,37 @@ using HietakissaUtils.Timer;
 
 public class OrcSpawner : MonoBehaviour
 {
-    public Timer timer;
+    public Timer enemySpawnTimer;
+    public Timer roundChangeTimer;
 
     public GameObject orc;
+    [SerializeField] GameObject roundChangeScreen;
 
     Vector3 spawnPos;
 
     public int enemySpawnAmount;
+    public float timeInterval;
     int i;
-    
 
     private void Awake()
     {
-        Timer timer = new Timer(3f, gameObject);
+        Timer enemySpawnTimer = new Timer(timeInterval, gameObject);
+        Timer roundChangeTimer = new Timer(120f, gameObject);
 
-        timer.OnCompleted += SpawnEnemies;
+        enemySpawnTimer.OnCompleted += SpawnEnemies;
+        roundChangeTimer.OnCompleted += ChangeRound;
+    }
+
+    private void ChangeRound()
+    {
+        GameManager.Instance.menuManager.OpenMenu("RoundChangeMenu");
     }
 
     private void SpawnEnemies()
     {
         i = 0;
 
-        
-        while(i > enemySpawnAmount)
+        while(i <= enemySpawnAmount)
         {
             spawnPos = GetRandomPos();
 
@@ -45,14 +53,13 @@ public class OrcSpawner : MonoBehaviour
             {
 
             }
-
         }
-
-        
     }
 
     Vector3 GetRandomPos()
     {
+        print("Got SpawnPos");
+
         float x = Random.Range(-600, 600);
         float y = 0.5f;
         float z = Random.Range(-600, 600);
