@@ -16,8 +16,6 @@ public class OrcAi : MonoBehaviour
 
     public Animator walkAnim;
     
-
-
     private NavMeshAgent orc;
     float distanceToCastle;
 
@@ -32,6 +30,10 @@ public class OrcAi : MonoBehaviour
 
     private void Start()
     {
+        //FIX THIS
+        movePositionTransform = transform.Find("OrcAttackCastle");
+        //FIX THIS
+
         orc.destination = movePositionTransform.position;
         Move();
     }
