@@ -5,6 +5,8 @@ using TMPro;
 
 public class CurrencySystem : MonoBehaviour
 {
+    CurrencySystem currencySystem;
+
     public TextMeshProUGUI moneyText;
     [Header("Values")]
     public int moneyAtStart = 250;
@@ -29,6 +31,13 @@ public class CurrencySystem : MonoBehaviour
     void UpdateMoneyText()
     {
         moneyText.text = $"Money: {moneyAmount}$";
+    }
+
+    public void addMoney(int amount)
+    {
+        moneyAmount += amount;
+
+        UpdateMoneyText();
     }
 
     

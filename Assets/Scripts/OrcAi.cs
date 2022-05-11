@@ -8,6 +8,10 @@ using HietakissaUtils.Timer;
 
 public class OrcAi : MonoBehaviour
 {
+    TowerShooting towerShooting;
+
+    CurrencySystem currencySystem;
+
     [SerializeField] private Transform movePositionTransform;
 
     public HealthSystem healthSystem;
@@ -25,15 +29,24 @@ public class OrcAi : MonoBehaviour
 
         Timer timer = new Timer(3f, gameObject);
 
+        healthSystem = new HealthSystem(100f);
+
+        healthSystem.OnDied += Die;
+
         timer.OnCompleted += Actions;
     }
 
     private void Start()
     {
-        
+
+        currencySystem = GameManager.Instance.currencySystem;
+
+        towerShooting = GameManager.Instance.towerShooting;
+
+        //towerShooting.enemies.Add(gameObject);
+
         movePositionTransform = GameObject.Find("OrcAttackCastle").transform;
         
-
         orc.destination = movePositionTransform.position;
         Move();
     }
@@ -55,5 +68,12 @@ public class OrcAi : MonoBehaviour
         print("tried to move");
         orc.isStopped = false;
         
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
+
+        currencySystem.addMoney(50);
     }
 }

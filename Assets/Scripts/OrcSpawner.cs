@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using HietakissaUtils.Timer;
+using TMPro;
 
 public class OrcSpawner : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class OrcSpawner : MonoBehaviour
     public Timer roundChangeTimer;
 
     public GameObject orc;
-    [SerializeField] GameObject roundChangeScreen;
 
     Vector3 spawnPos;
 
@@ -28,7 +28,12 @@ public class OrcSpawner : MonoBehaviour
 
     private void ChangeRound()
     {
-        GameManager.Instance.menuManager.OpenMenu("RoundChangeMenu");
+        if(timeInterval > 4f)
+        {
+            timeInterval -= 0.5f;
+            enemySpawnTimer.SetCompletionTime(timeInterval);
+            enemySpawnAmount += 2;
+        }
     }
 
     private void SpawnEnemies()
@@ -39,19 +44,10 @@ public class OrcSpawner : MonoBehaviour
         {
             spawnPos = GetRandomPos();
 
-            if(spawnPos.x > 200 && spawnPos.z > 200 || spawnPos.x < -200 && spawnPos.z < -200)
+            if(spawnPos.x > 300 || spawnPos.z > 300 || spawnPos.x < -300 || spawnPos.z < -300)
             {
                 Instantiate(orc, spawnPos, Quaternion.identity);
                 i++;
-            }
-            else if(spawnPos.x > 200 && spawnPos.z < -200 || spawnPos.x < -200 && spawnPos.z > 200)
-            {
-                Instantiate(orc, spawnPos, Quaternion.identity);
-                i++;
-            }
-            else
-            {
-
             }
         }
     }

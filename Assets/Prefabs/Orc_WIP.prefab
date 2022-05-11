@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 3287344340816756866}
   - component: {fileID: 3287344340816756865}
   - component: {fileID: 3287344340816756864}
-  m_Layer: 0
+  - component: {fileID: 691476140}
+  m_Layer: 3
   m_Name: Orc_WIP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,6 +95,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movePositionTransform: {fileID: 0}
   walkAnim: {fileID: 3287344340816756866}
+--- !u!65 &691476140
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2404807384406638045}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.759207, y: 11.767676, z: 6.5969696}
+  m_Center: {x: -0.8027582, y: 4.6173873, z: -2.594658}
 --- !u!1 &2935302905534223165
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,7 +119,7 @@ GameObject:
   - component: {fileID: 2376212986784005662}
   - component: {fileID: 2350588198128659643}
   - component: {fileID: 7600913568766537462}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: R Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +200,7 @@ GameObject:
   - component: {fileID: 4831745578165123948}
   - component: {fileID: 6352757507051644839}
   - component: {fileID: 6434512026099689970}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +281,7 @@ GameObject:
   - component: {fileID: 1528265000448055585}
   - component: {fileID: 62759164345826060}
   - component: {fileID: 5054895424579052189}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,7 +362,7 @@ GameObject:
   - component: {fileID: 7155019726318207157}
   - component: {fileID: 313200813111930716}
   - component: {fileID: 6560571614361347905}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -429,7 +443,7 @@ GameObject:
   - component: {fileID: 8855579954801137944}
   - component: {fileID: 303038243105952346}
   - component: {fileID: 4086228878995031634}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -510,7 +524,7 @@ GameObject:
   - component: {fileID: 2653793993191223287}
   - component: {fileID: 1815908015468472897}
   - component: {fileID: 9197220293663293662}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: L Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}

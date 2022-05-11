@@ -19,7 +19,11 @@ public class GameManager : MonoBehaviour
 
     public CurrencySystem currencySystem;
 
+    public TowerShooting towerShooting;
+
     public Shop shop;
+
+    public Projectile projectile;
 
     public gamestate gameState;
 
